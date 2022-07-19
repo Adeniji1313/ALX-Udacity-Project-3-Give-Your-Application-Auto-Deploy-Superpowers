@@ -7,7 +7,7 @@ jobs:
     steps:
       - checkout
       - run:
-          name: Build Front-end
+          name: Build Front-End
           command: |
               cd frontend
               npm install
@@ -19,7 +19,7 @@ jobs:
     steps:
       - checkout
       - run:
-          name: Build Back-end
+          name: Build Back-End
           command: |
               cd backend
               npm install
@@ -31,7 +31,7 @@ jobs:
     steps:
       - checkout
       - run:
-          name: Test Frontend
+          name: Test Front-End
           command:  |
             cd frontend
             npm install
@@ -43,11 +43,35 @@ jobs:
     steps:
       - checkout
       - run:
-          name: Test Backend
+          name: Test Back-End
           command:  |
             cd backend
             npm install
             npm run test
+
+  scan-frontend:
+    docker:
+      - image: circleci/node:13.8.0
+    steps:
+      - checkout
+      - run:
+          name: Audit the Front-End
+          command: |
+            cd frontend
+            npm install
+            npm audit --audit-level=critical
+
+  scan-backend:
+    docker:
+      - image: circleci/node:13.8.0
+    steps:
+      - checkout
+      - run:
+          name: Audit the Back-End
+          command: |
+            cd backend
+            npm install
+            npm audit --audit-level=critical
 
 
 workflows:
@@ -60,3 +84,7 @@ workflows:
       - test-backend:
           requires:
             - build-backend
+      - scan-frontend:
+          requires: [test-frontend]
+      - scan-backend:
+          requires: [test-backend]
