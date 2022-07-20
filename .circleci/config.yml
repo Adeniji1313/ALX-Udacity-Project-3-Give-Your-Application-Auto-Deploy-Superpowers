@@ -91,8 +91,10 @@ jobs:
 workflows:
   project3:
     jobs:
-      - build-frontend
-      - build-backend
+      - build-frontend:
+          context:  abbas-context
+      - build-backend:
+          context:  abbas-context
     #  - test-frontend:
      #     requires: [build-frontend]
      # - test-backend:
