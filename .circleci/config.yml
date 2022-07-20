@@ -1,5 +1,7 @@
 version: 2.1
 
+orbs:
+  slack: circleci/slack@4.1
 jobs:
   build-frontend:
     docker:
@@ -12,6 +14,10 @@ jobs:
               cd frontend
               npm install
               npm run build
+      - slack/notify:
+          channel:  C03DAJYL3SM
+          mentions: D03FRB3CLAC
+
 
   build-backend:
     docker:
@@ -24,6 +30,9 @@ jobs:
               cd backend
               npm install
               npm run build
+      - slack/notify:
+          channel:  C03DAJYL3SM
+          mentions: D03FRB3CLAC
 
   test-frontend:
     docker:
@@ -78,18 +87,17 @@ jobs:
             npm audit --audit-level=critical
             
 
-
 workflows:
   project3:
     jobs:
       - build-frontend
       - build-backend
-      - test-frontend:
-          requires: [build-frontend]
-      - test-backend:
-          requires:
-            - build-backend
-      - scan-frontend:
-          requires: [test-frontend]
-      - scan-backend:
-          requires: [test-backend]
+    #  - test-frontend:
+     #     requires: [build-frontend]
+     # - test-backend:
+      #    requires:
+      #      - build-backend
+     # - scan-frontend:
+      #    requires: [test-frontend]
+      #- scan-backend:
+       #   requires: [test-backend]
