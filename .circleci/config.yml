@@ -28,6 +28,7 @@ jobs:
               cd frontend
               npm install
               npm run build
+      - deploy  
 
   build-backend:
     docker:
@@ -40,6 +41,7 @@ jobs:
               cd backend
               npm install
               npm run build
+      - deploy 
   
   test-frontend:
     docker:
@@ -97,11 +99,11 @@ jobs:
 workflows:
   project3:
     jobs:
-      - build-frontend
-      - build-backend
-      - deploy:
+      - build-frontend:
           context: abbas-context
-          requires: [build-frontend, build-backend]
+      - build-backend:
+          context: abbas-context
+
 
     #  - test-frontend:
      #     requires: [build-frontend]
