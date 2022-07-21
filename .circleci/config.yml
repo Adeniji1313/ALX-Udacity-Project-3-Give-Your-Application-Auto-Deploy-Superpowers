@@ -101,7 +101,10 @@ workflows:
       - build-backend
       - deploy:
           context: [abbas-context]
-          requires: [build-frontend, build-backend]
+          requires: [build-frontend]
+      - deploy:
+          context: [abbas-context]
+          requires: [build-backend]     
 
     #  - test-frontend:
      #     requires: [build-frontend]
