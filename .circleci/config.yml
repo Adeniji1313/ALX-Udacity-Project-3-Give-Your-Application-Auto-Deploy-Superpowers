@@ -3,6 +3,20 @@ version: 2.1
 orbs:
   slack: circleci/slack@4.1
 jobs:
+  deploy:
+    docker:
+      - image: 'cimg/base:stable'
+    steps:
+      - slack/notify:
+          channel:  C03DAJYL3SM
+          event: fail
+          mentions: '@Abbas'
+          template: basic_fail_1
+      - slack/notify:
+          channel:  C03DAJYL3SM
+          event: pass
+          template: basic_success_1
+
   build-frontend:
     docker:
       - image: circleci/node:13.8.0
@@ -13,16 +27,7 @@ jobs:
           command: |
               cd frontend
               npm install
-              npm run build
-      - slack/notify:
-          channel:  C03DAJYL3SM
-          event: fail
-          mentions: '@Abbas'
-          template: basic_fail_1
-      - slack/notify:
-          channel:  C03DAJYL3SM
-          event: pass
-          template: basic_success_1
+              npm run build 
 
   build-backend:
     docker:
@@ -35,15 +40,6 @@ jobs:
               cd backend
               npm install
               npm run build
-      - slack/notify:
-          channel:  C03DAJYL3SM
-          event: fail
-          mentions: '@Abbas'
-          template: basic_fail_1
-      - slack/notify:
-          channel:  C03DAJYL3SM
-          event: pass
-          template: basic_success_1
   
   test-frontend:
     docker:
@@ -101,11 +97,11 @@ jobs:
 workflows:
   project3:
     jobs:
-      - build-frontend:
-          context: abbas-context
-      - build-backend:
-          context: abbas-context
-
+      - build-frontend
+      - build-backend
+      - deploy:
+          context: [abbas-context]
+          requires: [build-frontend, build-backend]
 
     #  - test-frontend:
      #     requires: [build-frontend]
