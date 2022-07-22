@@ -28,6 +28,11 @@ jobs:
               cd frontend
               npm install
               npm run build 
+      - slack/notify:
+          channel:  C03DAJYL3SM
+          event: pass
+          mentions: '@Abbas'
+          template: basic_success_1
 
   build-backend:
     docker:
@@ -40,6 +45,11 @@ jobs:
               cd backend
               npm install
               npm run build
+      - slack/notify:
+          channel:  C03DAJYL3SM
+          event: fail
+          mentions: '@Abbas'
+          template: basic_fail_1
   
   test-frontend:
     docker:
@@ -97,14 +107,10 @@ jobs:
 workflows:
   project3:
     jobs:
-      - build-frontend
-      - build-backend
-      - deploy:
-          context: [abbas-context]
-          requires: [build-frontend]
-      - deploy:
-          context: [abbas-context]
-          requires: [build-backend]     
+      - build-frontend:
+          context: abbas-context
+      - build-backend:
+          context: abbas-context  
 
     #  - test-frontend:
      #     requires: [build-frontend]
