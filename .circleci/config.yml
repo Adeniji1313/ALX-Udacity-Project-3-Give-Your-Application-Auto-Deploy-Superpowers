@@ -30,9 +30,8 @@ jobs:
               npm run build 
       - slack/notify:
           channel:  C03DAJYL3SM
-          event: always
           mentions: '@Abbas'
-          template: basic_success_1
+          template: success_tagged_deploy_1
 
   build-backend:
     docker:
