@@ -109,8 +109,8 @@ workflows:
     jobs:
       - build-frontend:
           context: abbas-context
-      - build-backend:
-          context: abbas-context  
+    #   - build-backend:
+     #     context: abbas-context  
 
     #  - test-frontend:
      #     requires: [build-frontend]
