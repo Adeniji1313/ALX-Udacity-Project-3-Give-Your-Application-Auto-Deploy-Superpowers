@@ -131,7 +131,7 @@ jobs:
             --output >> .circleci/ansible/inventory.txt
             exit 1
 
-      - destroy_environment
+      - destroy-environment
 
       - persist_to_workspace:
           root: ~/
