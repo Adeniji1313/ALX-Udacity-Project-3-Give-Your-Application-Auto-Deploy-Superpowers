@@ -12,7 +12,7 @@ commands:
             command: |
               aws cloudformation delete-stack --stack-name udapeople-frontend-${CIRCLE_WORKFLOW_ID:0:7}
               aws cloudformation delete-stack --stack-name udapeople-backend-${CIRCLE_WORKFLOW_ID:0:7}
-              exit 1
+             
 jobs:
 
   build-frontend:
@@ -128,7 +128,7 @@ jobs:
           command: |
             aws ec2 describe-instances \
             --query "Reservations[*].Instances[*].[PublicIpAddress]" \
-            --output >> .circleci/ansible/inventory.txt
+            --output text >> .circleci/ansible/inventory.txt
             
 
       - destroy-environment
