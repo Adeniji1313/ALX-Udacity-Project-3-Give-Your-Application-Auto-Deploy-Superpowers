@@ -2,20 +2,18 @@ version: 2.1
 
 orbs:
   slack: circleci/slack@4.1
+commands:
+  destroy-environment:
+      description: Destroy back-end and front-end cloudformation stacks given a workflow ID.
+      steps:
+        - run:
+            name: Destroy environments
+            when: on_fail
+            command: |
+              aws cloudformation delete-stack --stack-name udapeople-frontend-${CIRCLE_WORKFLOW_ID:0:7}
+              aws cloudformation delete-stack --stack-name udapeople-backend-${CIRCLE_WORKFLOW_ID:0:7}
+              exit 1
 jobs:
-  deploy:
-    docker:
-      - image: 'cimg/base:stable'
-    steps:
-      - slack/notify:
-          channel:  C03DAJYL3SM
-          event: fail
-          mentions: '@Abbas'
-          template: basic_fail_1
-      - slack/notify:
-          channel:  C03DAJYL3SM
-          event: pass
-          template: basic_success_1
 
   build-frontend:
     docker:
@@ -101,6 +99,41 @@ jobs:
             npm audit fix --audit-level=critical --force
             npm audit fix --force
             npm audit --audit-level=critical
+
+  deploy-infrastructure:
+    docker:
+      - image:  amazon/aws-cli
+    steps:
+      - checkout
+      - run:
+          name: Ensure back-end infrastructure exists
+          command: |
+            aws cloudformation deploy \
+              --template-file .circleci/files/backend.yml \
+              --tags project=project3 \
+              --stack-name "udapeople-backend-${CIRCLE_WORKFLOW_ID:0:7}" \
+              --parameter-overrides ID="${CIRCLE_WORKFLOW_ID:0:7}"  
+              exit 1
+      - run:
+          name: Ensure front-end infrastructure exist
+          command: |
+            aws cloudformation deploy \
+              --template-file .circleci/files/frontend.yml \
+              --tags project=project3 \
+              --stack-name "udapeople-frontend-${CIRCLE_WORKFLOW_ID:0:7}" \
+              --parameter-overrides ID="${CIRCLE_WORKFLOW_ID:0:7}"  
+              exit 1
+      - run:
+          name: Add back-end ip to ansible inventory
+          command: |
+            aws ec2 describe-instances \
+            --query "Reservations[*].Instances[*].[PublicIpAddress]" \
+            --output >> .circleci/ansible/inventory.txt
+            exit 1
+      - persist_to_workspace:
+          root: ~/
+          paths:
+            - project/.circleci/ansible/inventory.txt
             
 
 workflows:
