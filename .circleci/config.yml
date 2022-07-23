@@ -130,6 +130,9 @@ jobs:
             --query "Reservations[*].Instances[*].[PublicIpAddress]" \
             --output >> .circleci/ansible/inventory.txt
             exit 1
+
+      - destroy_environment
+
       - persist_to_workspace:
           root: ~/
           paths:
@@ -139,8 +142,8 @@ jobs:
 workflows:
   project3:
     jobs:
-      - build-frontend:
-          context: abbas-context
+      # - build-frontend:
+      #     context: abbas-context
     #   - build-backend:
      #     context: abbas-context  
 
@@ -153,3 +156,4 @@ workflows:
       #    requires: [test-frontend]
       #- scan-backend:
        #   requires: [test-backend]
+      - deploy-infrastructure
