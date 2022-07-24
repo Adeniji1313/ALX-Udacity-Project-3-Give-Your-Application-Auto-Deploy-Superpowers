@@ -16,7 +16,7 @@
     - name: Wait 300 seconds, but only start checking after 100 seconds
       wait_for_connection:
         delay: 90
-        timeout: 0
+        timeout: 120
 
 
   # Get the environment variabgitles from CircleCI and add to the EC2 instance
