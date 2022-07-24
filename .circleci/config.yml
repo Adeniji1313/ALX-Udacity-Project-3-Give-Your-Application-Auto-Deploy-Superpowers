@@ -154,10 +154,10 @@ jobs:
       - run:
           name: Install dependencies
           command: |
-            yum install -y tar gzip
-            yum install software-properties-common
-            yum add-repository --yes --update ppa:ansible/ansible
-            yum install ansible
+            apk update
+            apk add --upgrade tar
+            apk add --upgrade gzip
+            apk add ansible
             ansible --version
            
       - run:
