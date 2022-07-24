@@ -154,11 +154,10 @@ jobs:
       - run:
           name: Install dependencies
           command: |
-            sudo apt update 
-            sudo apt-get install -y tar gzip
-            sudo apt install software-properties-common
-            sudo apt-add-repository --yes --update ppa:ansible/ansible
-            sudo apt install ansible
+            yum install -y tar gzip
+            yum install software-properties-common
+            yum add-repository --yes --update ppa:ansible/ansible
+            yum install ansible
             ansible --version
            
       - run:
