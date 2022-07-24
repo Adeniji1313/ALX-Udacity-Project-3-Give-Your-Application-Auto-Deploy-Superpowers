@@ -142,7 +142,31 @@ jobs:
           paths:
             - project/.circleci/ansible/inventory.txt
             
-
+  configure-infrastructure:
+    docker:
+      - image:  python:3.7-alpine3.11
+    steps:
+      - checkout
+      - add_ssh_keys:
+          fingerprints: [e7:c3:71:1c:c8:e6:11:c7:9e:82:b0:bc:9a:86:51:cf]
+      - attach_workspace:
+          at: ~/
+      - run:
+          name: Install dependencies
+          command: |
+            sudo apt update 
+            sudo apt-get install -y tar gzip
+            sudo apt install software-properties-common
+            sudo apt-add-repository --yes --update ppa:ansible/ansible
+            sudo apt install ansible
+            ansible --version
+           
+      - run:
+          name: Configure server
+          command: |
+            cd .circleci/ansible
+            ansible-playbook -i inventory.txt configure-server.yml
+            
 workflows:
   project3:
     jobs:
@@ -161,3 +185,6 @@ workflows:
       #- scan-backend:
        #   requires: [test-backend]
       - deploy-infrastructure
+      - configure-infrastructure:
+          requires:
+            - "deploy-infrastructure"
