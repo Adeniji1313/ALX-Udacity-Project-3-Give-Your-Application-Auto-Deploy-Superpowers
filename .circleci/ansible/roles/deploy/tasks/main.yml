@@ -1,7 +1,7 @@
 - name: Unarchive a file that is already on the remote machine
   unarchive:
-    src: artifact.tar.gz
-    dest: ~/
+    src: ./artifact.tar.gz
+    dest: ./
     remote_src: yes
 
 - name: start pm2
