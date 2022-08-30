@@ -261,8 +261,8 @@ jobs:
 workflows:
   project3:
     jobs:
-      - build-frontend:
-          context: abbas-context
+      # - build-frontend:
+          #context: abbas-context
     #   - build-backend:
      #     context: abbas-context  
 
