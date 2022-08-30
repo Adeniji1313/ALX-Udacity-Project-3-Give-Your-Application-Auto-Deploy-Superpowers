@@ -13,7 +13,7 @@
     - ansible_stdout_callback: yaml
 
   pre_tasks:
-    - name: Wait 300 seconds, but only start checking after 100 seconds
+    - name: Wait 90 seconds, but only start checking after 100 seconds
       wait_for_connection:
         delay: 90
         timeout: 120
