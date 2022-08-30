@@ -4,7 +4,7 @@
     dest: ~/
     remote_src: yes
 
-- name: "start app"
+- name: start app
   become: true
   npm:
     npm install
