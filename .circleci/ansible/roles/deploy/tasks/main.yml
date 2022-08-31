@@ -15,12 +15,7 @@
     ls
     cd app
     ls
-
-- name: Unarchive a file that is already on the remote machine
-  unarchive:
-    src: ~/app/artifact.tar.gz
-    dest: ~/
-    remote_src: no
+    tar -xvf artifact.tar.gz
 
 - name: start pm2
   become: true
