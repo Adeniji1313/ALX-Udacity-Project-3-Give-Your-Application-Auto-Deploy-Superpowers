@@ -1,11 +1,12 @@
 - name: Create Directory
   file:
     path: ~/app
+    state: directory
 
 - name: Copy Artifact to Machine
   become: true
   copy: 
-    src: files/artifact.tar.gz
+    src: artifact.tar.gz
     dest: ~/app/
 
 - name: Unarchive a file that is already on the remote machine
