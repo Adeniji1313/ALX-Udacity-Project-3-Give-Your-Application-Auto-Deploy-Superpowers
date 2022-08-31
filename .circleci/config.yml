@@ -239,7 +239,6 @@ jobs:
             apk add --update nodejs npm
             ansible --version
             apk add --no-cache aws-cli
-            apk add util-linux
             
       - run:
           name: Use Ansible to copy the files
@@ -249,7 +248,8 @@ jobs:
             npm run build
             cd ..
             tar -C backend -czvf artifact.tar.gz .
-            ls -a
+            ls
+            cp artifact.tar.gz ~/project/.circleci/ansible/roles/deploy/files/
             cd .circleci/ansible
             echo "Contents  of the inventory.txt file is -------"
             cat inventory.txt

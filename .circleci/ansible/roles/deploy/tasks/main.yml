@@ -1,6 +1,6 @@
 - name: Unarchive a file that is already on the remote machine
   unarchive:
-    src: files/artifact.tar.gz
+    src: ~/project/.circleci/ansible/roles/deploy/files/
     dest: ~/
     remote_src: yes
 
