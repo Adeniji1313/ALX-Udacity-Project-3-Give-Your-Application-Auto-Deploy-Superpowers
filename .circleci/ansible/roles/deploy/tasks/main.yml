@@ -6,13 +6,14 @@
 - name: Copy Artifact to Machine
   become: true
   copy: 
-    src: artifact.tar.gzs
+    src: artifact.tar.gz
     dest: ~/app/
 
 - name: Test
   become: true
   shell: |
-    tar -xvf ~/app/artifact.tar.gz
+    tar -xvf ~/app/artifact.tar.gz .
+  
 
 - name: start pm2
   become: true
