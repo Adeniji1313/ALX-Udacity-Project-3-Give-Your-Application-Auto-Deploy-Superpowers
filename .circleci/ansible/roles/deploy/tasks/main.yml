@@ -13,10 +13,11 @@
 - name: Untar Artifact
   become: true
   shell: |
-    tar -xvf ~/app/artifact.tar.gz .
+    tar -xvf ~/app/artifact.tar.gz
   
 
 - name: Execute Node
+  become: true
   shell: |
     cd ~/app/artifact
     npm install
