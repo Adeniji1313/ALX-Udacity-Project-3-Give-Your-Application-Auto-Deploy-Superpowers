@@ -10,15 +10,15 @@
     dest: ~/app/
 
 
-- name: Test
+- name: Untar Artifact
   become: true
   shell: |
     tar -xvf ~/app/artifact.tar.gz .
   
 
-- name: start pm2
+- name: Execute Node
   become: true
-  command:
+  shell:
     cd ~/app/artifact
     npm install
     pm2 stop default
