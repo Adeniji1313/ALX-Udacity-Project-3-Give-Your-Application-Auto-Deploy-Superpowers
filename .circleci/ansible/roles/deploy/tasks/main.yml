@@ -17,8 +17,7 @@
   
 
 - name: Execute Node
-  become: true
-  shell:
+  shell: |
     cd ~/app/artifact
     npm install
     pm2 stop default
