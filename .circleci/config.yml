@@ -239,6 +239,7 @@ jobs:
             apk add --update nodejs npm
             ansible --version
             apk add --no-cache aws-cli
+            apk add util-linux
             
       - run:
           name: Use Ansible to copy the files
