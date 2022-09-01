@@ -222,7 +222,7 @@ jobs:
           name: Get backend url
           command: |
             BACKEND_IP=$(aws ec2 describe-instances --filters Name=instance-state-name,Values=running --query 'Reservations[*].Instances[*].PublicIpAddress' --output text)\
-            API_URL="http://${BACKEND_IP}:3030"
+            export API_URL="http://${BACKEND_IP}:3030"
             echo "${API_URL}"
             echo API_URL="http://${BACKEND_IP}:3030" >> frontend/.env
             cat frontend/.env
@@ -292,7 +292,7 @@ jobs:
           name: Get backend url
           command: |
             BACKEND_IP=$(aws ec2 describe-instances --filters Name=instance-state-name,Values=running --query 'Reservations[*].Instances[*].PublicIpAddress' --output text)\
-            API_URL="http://${BACKEND_IP}:3030"
+            export API_URL="http://${BACKEND_IP}:3030"
             echo "${API_URL}"
       - run:
           name: Backend smoke test.
