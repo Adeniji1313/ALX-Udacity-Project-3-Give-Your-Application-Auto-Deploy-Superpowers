@@ -187,14 +187,15 @@ jobs:
 
   run-migrations:
     docker:
-      - image:  circleci/node:13.8.0
+      - image:  circleci/node:16.10.0
     steps:
       - checkout
       - run:
           name: Run migrations
           command: |
             cd backend
-            sudo npm install -g npm
+            sudo npm install -g typescript
+            sudo npm install -g npm@8.19.1
             npm run migrations > migrations_dump.txt
             cat migrations_dump.txt
       - run:
