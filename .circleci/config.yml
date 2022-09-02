@@ -64,6 +64,10 @@ jobs:
           event: fail
           mentions: '@Abbas'
           template: basic_fail_1
+      - save_cache:
+          paths:
+            - "~/"
+          key: backend-build
   
   test-frontend:
     docker:
@@ -190,6 +194,8 @@ jobs:
       - image:  circleci/node:16.10.0
     steps:
       - checkout
+      - restore_cache:
+          keys: [backend-build]
       - run:
           name: Run migrations
           command: |
