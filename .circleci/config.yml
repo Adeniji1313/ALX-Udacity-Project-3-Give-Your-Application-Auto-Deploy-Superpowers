@@ -21,14 +21,14 @@ commands:
             name: Revert migrations
             when: on_fail
             command: |
-                SUCCESS=$(curl --insecure  https://kvdb.io/WhX5ir3waHiQtMThD364XR/migration_${CIRCLE_WORKFLOW_ID:0:7})
+                #SUCCESS=$(curl --insecure  https://kvdb.io/WhX5ir3waHiQtMThD364XR/migration_${CIRCLE_WORKFLOW_ID:0:7})
                 # Logic for reverting the database state
-                if (( $SUCCESS == 1 ));
-                then
-                    cd ~/project/backend
-                    npm install
-                    npm run migration:revert
-                fi  
+                #if (( $SUCCESS == 1 ));
+                #then
+                cd ~/project/backend
+                npm install
+                npm run migration:revert
+                #fi  
              
 jobs:
 
@@ -200,7 +200,7 @@ jobs:
           name: Run migrations
           command: |
             cd backend
-            sudo npm install -g npm@8.19.1
+            sudo npm instal -g npm@8.19.1
             npm run migrations > migrations_dump.txt
             cat migrations_dump.txt
       - run:
@@ -212,6 +212,7 @@ jobs:
             fi
 
       - destroy-environment
+      - revert-migrations
             
 
   deploy-frontend:
