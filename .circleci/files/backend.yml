@@ -35,3 +35,8 @@ Resources:
       Tags:
         - Key: Name
           Value: !Sub backend-${ID}
+
+Outputs:
+  ID:
+      Value: !Sub ${ID}
+      Description: Workflow ID
