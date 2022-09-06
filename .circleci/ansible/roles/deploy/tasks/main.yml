@@ -1,0 +1,27 @@
+- name: Create Directory
+  file:
+    path: ~/app
+    state: directory
+
+- name: Copy Artifact to Machine
+  become: true
+  copy: 
+    src: ~/project/artifact.tar.gz
+    dest: /home/ubuntu/app/
+
+
+#- name: Untar Artifact
+#  become: true
+ # shell: |
+  #  tar -xvf ~/app/artifact.tar.gz
+  
+
+- name: Untar Artifact and Execute Node
+  become: true
+  shell: |
+    cd /home/ubuntu/app/
+    tar -xvf artifact.tar.gz
+    npm install
+    npm run build
+    pm2 stop default
+    pm2 start npm -- start
